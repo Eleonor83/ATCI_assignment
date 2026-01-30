@@ -7,8 +7,8 @@ Detta repository innehåller min lösning på uppgiften om Continuous Integratio
 ## Del 1 – Rapport
 
 ### Continuous Integration (CI)
-Continuous Integration (CI) betyder att kod som jag och andra utvecklare skriver automatiskt byggs och testas när den pushas till GitHub.  
-Jag märkte att det är väldigt bra för att snabbt upptäcka fel innan de sprids till hela projektet.
+Continuous Integration betyder att kod som jag och andra utvecklare skriver automatiskt byggs och testas när den pushas till GitHub.  
+Jag tycker det är bra för att snabbt upptäcka fel innan de sprids till hela projektet.
 
 **Fördelar med CI:**
 - Fel upptäcks tidigt
@@ -23,17 +23,17 @@ Jag märkte att det är väldigt bra för att snabbt upptäcka fel innan de spri
 ---
 
 ### Testautomatisering
-Testautomatisering innebär att tester körs automatiskt istället för att man testar allt manuellt.  
+Testautomatisering innebär att tester körs automatiskt istället för manuellt.  
 Jag har använt NUnit för API-test och Selenium WebDriver för UI-test.  
 
-**Hur det kopplas till CI:** Testerna körs automatiskt i GitHub Actions vid varje push. På så sätt ser man direkt om något gått fel.
+**Koppling till CI:** Testerna körs automatiskt i GitHub Actions vid varje push, vilket gör att jag snabbt ser om något går fel.
 
 ---
 
 ### Automatiska tester i GitHub Actions
 För att tester ska köras automatiskt gjorde jag så här:
-1. Skapade en workflow-fil i `.github/workflows/ci.yml`
-2. Ställde in så att workflow körs vid push till `main`
+1. Skapade workflow-fil i `.github/workflows/ci.yml`
+2. Ställde in att workflow körs vid push till `main`
 3. Checkade ut koden
 4. Installerade .NET 7
 5. Körde `dotnet restore`, `dotnet build` och `dotnet test`
@@ -53,7 +53,7 @@ Testet gör följande:
 - Kontrollerar att inloggning fungerar med rätt användarnamn och lösenord
 - Kontrollerar att användaren hamnar på startsidan (inventory page)
 
-Testet är markerat med `[Ignore]` i CI eftersom Selenium kräver webbläsare och inte körs i pipeline.
+Testet är markerat `[Ignore]` i CI eftersom Selenium kräver webbläsare och inte körs i pipeline.
 
 ---
 
@@ -65,7 +65,7 @@ Testet gör:
 - GET-anrop till `/products`
 - Verifierar att statuskoden är 200
 
-Dessa tester körs automatiskt i GitHub Actions.
+Testerna körs automatiskt via GitHub Actions.
 
 ---
 
