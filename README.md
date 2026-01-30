@@ -7,80 +7,81 @@ Detta repository innehåller min lösning på uppgiften om Continuous Integratio
 ## Del 1 – Rapport
 
 ### Continuous Integration (CI)
-Continuous Integration innebär att kod som utvecklas kontinuerligt integreras i ett gemensamt repository.  
-Varje gång kod pushas körs automatiska tester och byggen för att kontrollera att allt fortfarande fungerar.
+Continuous Integration (CI) betyder att kod som jag och andra utvecklare skriver automatiskt byggs och testas när den pushas till GitHub.  
+Jag märkte att det är väldigt bra för att snabbt upptäcka fel innan de sprids till hela projektet.
 
 **Fördelar med CI:**
 - Fel upptäcks tidigt
-- Mindre risk att ny kod förstör befintlig funktionalitet
-- Automatisering sparar tid
+- Ny kod förstör inte befintlig funktionalitet
+- Sparar tid med automatiska tester
 
 **Utmaningar med CI:**
-- Kräver att tester är korrekt uppsatta
-- Kan ta tid om många tester körs
-- Kräver viss vana vid verktyg som GitHub Actions
+- Kräver att tester och workflow är korrekt uppsatta
+- Om tester tar lång tid blir pushen långsam
+- Måste vara noggrann med commits och kodstandard
 
 ---
 
 ### Testautomatisering
-Testautomatisering innebär att tester körs automatiskt istället för manuellt.  
-I detta projekt används NUnit för tester och Selenium WebDriver för UI-test.
+Testautomatisering innebär att tester körs automatiskt istället för att man testar allt manuellt.  
+Jag har använt NUnit för API-test och Selenium WebDriver för UI-test.  
 
-Testautomatisering används tillsammans med CI för att säkerställa att kod som pushas inte innehåller fel.
+**Hur det kopplas till CI:** Testerna körs automatiskt i GitHub Actions vid varje push. På så sätt ser man direkt om något gått fel.
 
 ---
 
 ### Automatiska tester i GitHub Actions
-För att köra tester automatiskt i GitHub Actions krävs följande steg:
+För att tester ska köras automatiskt gjorde jag så här:
+1. Skapade en workflow-fil i `.github/workflows/ci.yml`
+2. Ställde in så att workflow körs vid push till `main`
+3. Checkade ut koden
+4. Installerade .NET 7
+5. Körde `dotnet restore`, `dotnet build` och `dotnet test`
 
-1. Skapa en workflow-fil i `.github/workflows/`
-2. Konfigurera workflow så att det körs vid push till `main`
-3. Checka ut koden
-4. Installera rätt .NET-version
-5. Köra `dotnet restore`, `dotnet build` och `dotnet test`
-
-GitHub Actions kör sedan testerna automatiskt vid varje push.
+GitHub Actions kör nu testerna automatiskt vid varje push.
 
 **GitHub-repo:**  
-https://github.com/Eleonor83/ATCI_assignment.git
+[https://github.com/Eleonor83/ATCI_assignment.git](https://github.com/Eleonor83/ATCI_assignment.git)
 
 ---
 
 ## Del 2 – Selenium WebDriver
 
-Ett automatiserat test har skapats för inloggning på https://www.saucedemo.com/.
+Jag har skapat ett automatiserat test för inloggning på [https://www.saucedemo.com/](https://www.saucedemo.com/).
 
-Testet kontrollerar:
-- Att inloggning fungerar med korrekta användaruppgifter
-- Att användaren hamnar på startsidan efter inloggning
+Testet gör följande:
+- Kontrollerar att inloggning fungerar med rätt användarnamn och lösenord
+- Kontrollerar att användaren hamnar på startsidan (inventory page)
 
-UI-testet är markerat som `[Ignore]` i CI eftersom Selenium kräver webbläsare.
+Testet är markerat med `[Ignore]` i CI eftersom Selenium kräver webbläsare och inte körs i pipeline.
 
 ---
 
 ## Del 3 – Integrationstester
 
-Integrationstester har skapats mot https://fakestoreapi.com/.
+Integrationstester har jag gjort mot [https://fakestoreapi.com/](https://fakestoreapi.com/).  
 
-Testet:
-- Gör ett GET-anrop till `/products`
+Testet gör:
+- GET-anrop till `/products`
 - Verifierar att statuskoden är 200
 
-Testerna körs automatiskt via GitHub Actions vid varje push.
+Dessa tester körs automatiskt i GitHub Actions.
 
 ---
 
 ## Tekniker som använts
-- C#
-- .NET 7
-- NUnit
-- Selenium WebDriver
+- C#  
+- .NET 7  
+- NUnit  
+- Selenium WebDriver  
 - GitHub Actions
 
 ---
 
 ## Köra tester lokalt
 
-```bash
-dotnet test
+Om man vill testa lokalt går det med terminalen i projektroten:
 
+```bash
+dotnet restore
+dotnet test
